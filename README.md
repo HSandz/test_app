@@ -12,10 +12,14 @@ A simple yet powerful task management application built with Spring Boot backend
 - 🎨 **Modern UI**: Clean and intuitive user interface
 - 🔄 **Real-time Updates**: Instant feedback for all operations
 
+## Visualize
+<img width="1481" height="786" alt="image" src="https://github.com/user-attachments/assets/5c83d0c9-5660-43a6-8269-cf4cce84de1c" />
+<img width="1480" height="799" alt="image" src="https://github.com/user-attachments/assets/59bbfe20-3cb6-4df3-b115-818afa9b1de6" />
+
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────┐    HTTP Requests    ┌─────────────────────┐
+┌─────────────────────┐    HTTP Requests     ┌─────────────────────┐
 │                     │ ◄──────────────────► │                     │
 │  Frontend           │                      │  Backend            │
 │  (HTML/CSS/JS)      │                      │  (Spring Boot)      │
