@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Task Manager</h1>
+            <p>Simple task management application</p>
+        </header>
+
+        <main>
+            <!-- Add Task Form -->
+            <section class="add-task-section">
+                <h2>Add New Task</h2>
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-title">Title:</label>
+                        <input type="text" id="task-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">Description:</label>
+                        <textarea id="task-description" name="description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </form>
+            </section>
+
+            <!-- Search Tasks -->
+            <section class="search-section">
+                <h2>Search Tasks</h2>
+                <div class="search-controls">
+                    <input type="text" id="search-input" placeholder="Search tasks by title...">
+                    <button id="search-btn" class="btn btn-secondary">Search</button>
+                    <button id="show-all-btn" class="btn btn-secondary">Show All</button>
+                </div>
+                <div class="filter-controls">
+                    <button id="show-pending-btn" class="btn btn-outline">Show Pending</button>
+                    <button id="show-completed-btn" class="btn btn-outline">Show Completed</button>
+                </div>
+            </section>
+
+            <!-- Tasks List -->
+            <section class="tasks-section">
+                <h2>Tasks</h2>
+                <div id="tasks-container">
+                    <div id="loading" class="loading">Loading tasks...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Task</h2>
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="form-group">
+                    <label for="edit-task-title">Title:</label>
+                    <input type="text" id="edit-task-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-description">Description:</label>
+                    <textarea id="edit-task-description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-task-completed">
+                        <input type="checkbox" id="edit-task-completed" name="completed">
+                        Completed
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Task</button>
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
