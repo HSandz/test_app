@@ -1,4 +1,4 @@
-# 📝 Assignment 3 - Blog Management API
+<img width="1368" height="876" alt="image" src="https://github.com/user-attachments/assets/de29348f-fef4-4c8b-bae9-d4118f95d201" /># 📝 Assignment 3 - Blog Management API
 
 A comprehensive **SpringBoot REST API** for blog management with **JWT authentication** and **role-based authorization**.
 
@@ -67,6 +67,37 @@ GET    /api/users/{id}         # Get user by ID
 PUT    /api/users/{id}         # Update user
 DELETE /api/users/{id}         # Delete user
 ```
+
+## Postman Test
+### Register User
+<img width="1371" height="599" alt="image" src="https://github.com/user-attachments/assets/2371e2a9-dce7-41fa-8c2c-2ef329e33fef" />
+
+### Register Admin
+<img width="1374" height="596" alt="image" src="https://github.com/user-attachments/assets/5f213d31-59e5-4f5f-b7b4-11ea1c58bf64" />
+
+### Login User (Token)
+<img width="1368" height="745" alt="image" src="https://github.com/user-attachments/assets/fe7b36d7-7df9-4082-a5a3-b6733fabe4dd" />
+
+### Login Admin (Token)
+<img width="1372" height="747" alt="image" src="https://github.com/user-attachments/assets/3dcd0154-4d41-4e98-a1e3-8dfbe9468ca0" />
+
+### Create Blog
+<img width="1368" height="878" alt="image" src="https://github.com/user-attachments/assets/a34aa894-55ee-4688-a59b-2436b1b2fb0e" />
+
+### Get All Blogs
+<img width="1370" height="888" alt="image" src="https://github.com/user-attachments/assets/32c2593a-328b-4d08-a27d-747f2f6465ac" />
+
+### Update Blogs
+<img width="1368" height="876" alt="image" src="https://github.com/user-attachments/assets/33f4c02c-22ed-4f67-b32d-8f6f8202bd95" />
+
+### Delete Blogs
+<img width="1382" height="499" alt="image" src="https://github.com/user-attachments/assets/2f0395c6-b3fc-4b88-99c9-16d833a89024" />
+
+### Permission Test: User access Admin endpoints
+<img width="1373" height="545" alt="image" src="https://github.com/user-attachments/assets/d8a95d44-bbc9-4720-b11c-44c0b6ac7b88" />
+
+### Permission Test: Access protected endpoint without token
+<img width="1377" height="561" alt="image" src="https://github.com/user-attachments/assets/80064bf5-cdf5-4424-8220-3d41cbe0dd4e" />
 
 ## 🚀 Quick Start
 
