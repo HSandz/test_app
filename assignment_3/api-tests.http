@@ -1,0 +1,90 @@
+### VS Code REST Client - Test File
+### Variables
+@baseUrl = http://localhost:8080
+@userToken = 
+@adminToken = 
+
+### 1. Register User
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com", 
+  "password": "123456"
+}
+
+### 2. Register Admin
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "testadmin",
+  "email": "admin@example.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+### 3. Login User (Copy token to @userToken variable above)
+POST {{baseUrl}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "123456"
+}
+
+### 4. Login Admin (Copy token to @adminToken variable above)
+POST {{baseUrl}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "testadmin", 
+  "password": "123456"
+}
+
+### 5. Get All Blogs (Public)
+GET {{baseUrl}}/api/blogs
+
+### 6. Create Blog (User)
+POST {{baseUrl}}/api/blogs
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "title": "My Test Blog",
+  "content": "This is the content of my test blog post using VS Code REST Client."
+}
+
+### 7. Get My Blogs (User)
+GET {{baseUrl}}/api/blogs/my
+Authorization: Bearer {{userToken}}
+
+### 8. Get All Users (Admin only)
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{adminToken}}
+
+### 9. Get User by ID (Admin only)
+GET {{baseUrl}}/api/users/1
+Authorization: Bearer {{adminToken}}
+
+### 10. Update Blog (Owner or Admin)
+PUT {{baseUrl}}/api/blogs/1
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "title": "Updated Blog Title",
+  "content": "Updated content using REST Client"
+}
+
+### 11. Delete Blog (Owner or Admin)
+DELETE {{baseUrl}}/api/blogs/1
+Authorization: Bearer {{userToken}}
+
+### 12. Test Permission - User tries to access Admin endpoint (Should fail)
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{userToken}}
+
+### 13. Test No Auth - Access protected endpoint without token (Should fail)
+GET {{baseUrl}}/api/blogs/my
