@@ -37,6 +37,25 @@ A Spring Boot web application for managing online courses with user authenticati
   - File-based persistence
   - JPA/Hibernate for data management
 
+## Visualize
+### Home Page
+<img width="1845" height="860" alt="image" src="https://github.com/user-attachments/assets/f7f9ecee-4839-4dab-9f5e-75b937296d8a" />
+
+### Register Account
+<img width="1822" height="956" alt="image" src="https://github.com/user-attachments/assets/f7b611ea-13f8-4195-aecb-241a002edec3" />
+
+### Login Account
+<img width="1837" height="953" alt="image" src="https://github.com/user-attachments/assets/e49f3ac3-3add-4ed8-8ed8-9d488347b554" />
+
+### Welcome Page
+<img width="1827" height="957" alt="image" src="https://github.com/user-attachments/assets/048bf21a-81bf-4849-b6b8-dc894feed48e" />
+
+### Courses Page
+<img width="1822" height="958" alt="image" src="https://github.com/user-attachments/assets/2fd53048-7b0e-4d1b-ad29-7e4eadd6ddbe" />
+
+### Admin Page (/admin)
+<img width="1823" height="960" alt="image" src="https://github.com/user-attachments/assets/8e4df7aa-c856-4e57-9cee-a2d2a65694f4" />
+
 ## 🛠 Technologies Used
 
 - **Backend:**
