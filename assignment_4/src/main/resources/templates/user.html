@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .user-info {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .token-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        .token-value {
+            word-break: break-all;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Đăng nhập thành công!</h1>
+        
+        <div class="user-info">
+            <h2>👤 Thông tin User</h2>
+            <table>
+                <tr>
+                    <th>Thuộc tính</th>
+                    <th>Giá trị</th>
+                </tr>
+                <tr>
+                    <td><strong>Username</strong></td>
+                    <td th:text="${username}"></td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td th:text="${email}"></td>
+                </tr>
+                <tr>
+                    <td><strong>Full Name</strong></td>
+                    <td th:text="${name}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="token-box">
+            <h2>🎫 ID Token (OIDC)</h2>
+            <p>ID Token là JWT chứa thông tin xác thực của user:</p>
+            <div class="token-value" th:text="${idToken}"></div>
+        </div>
+
+        <div class="token-box" style="border-left-color: #007bff;">
+            <h2>🔑 Access Token</h2>
+            <p>Access Token dùng để truy cập các protected resources:</p>
+            <div class="token-value" th:text="${accessToken}"></div>
+        </div>
+
+        <div class="token-box" style="border-left-color: #ffc107;">
+            <h2>🔄 Refresh Token</h2>
+            <p>Refresh Token dùng để lấy Access Token mới khi hết hạn:</p>
+            <div class="token-value" th:text="${refreshToken}"></div>
+            <p class="success" th:if="${refreshToken != 'N/A'}">✓ Refresh token đã được cấp thành công!</p>
+            <p th:if="${refreshToken == 'N/A'}" style="color: #dc3545;">
+                ⚠ Refresh token không có. Đảm bảo scope "offline_access" được cấu hình trong Keycloak client.
+            </p>
+        </div>
+
+        <div class="token-box" style="border-left-color: #6c757d;">
+            <h2>📋 All Claims (ID Token)</h2>
+            <table>
+                <tr>
+                    <th>Claim Key</th>
+                    <th>Claim Value</th>
+                </tr>
+                <tr th:each="entry : ${claims}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>🔗 Useful Links</h2>
+        <a href="/" class="btn">🏠 Trang chủ</a>
+        <a href="/api/tokens" class="btn" target="_blank">📄 View Tokens (JSON)</a>
+        <a href="/api/userinfo" class="btn" target="_blank">👤 User Info (JSON)</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger">🚪 Đăng xuất</button>
+        </form>
+    </div>
+</body>
+</html>

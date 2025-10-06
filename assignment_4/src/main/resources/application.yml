@@ -1,0 +1,38 @@
+# Alternative configuration using YAML format
+# You can use this instead of application.properties
+
+spring:
+  application:
+    name: assignment_4
+  
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: spring-boot-client
+            client-secret: your-client-secret  # Thay bằng secret thực tế
+            scope:
+              - openid
+              - profile
+              - email
+              - offline_access  # Quan trọng cho Refresh Token
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/realms/myrealm
+            authorization-uri: http://localhost:8180/realms/myrealm/protocol/openid-connect/auth
+            token-uri: http://localhost:8180/realms/myrealm/protocol/openid-connect/token
+            user-info-uri: http://localhost:8180/realms/myrealm/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8180/realms/myrealm/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
+
+server:
+  port: 8080
+
+logging:
+  level:
+    "[org.springframework.security]": DEBUG
+    "[org.springframework.security.oauth2]": DEBUG
