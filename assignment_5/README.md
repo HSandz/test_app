@@ -1,4 +1,4 @@
-# Course Management System
+# Course Management System ON DOCKER
 
 A Spring Boot web application for managing online courses with user authentication and role-based access control.
 
@@ -8,6 +8,7 @@ A Spring Boot web application for managing online courses with user authenticati
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
+- [Docker Deployment](#-docker-deployment)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Database](#database)
@@ -121,7 +122,142 @@ mvn spring-boot:run
 
 The application will start on `http://localhost:8080`
 
-## 📖 Usage
+## � Docker Deployment
+
+The application includes Docker support for easy deployment and consistent environment setup.
+
+### Prerequisites for Docker
+
+- Docker Desktop installed ([Download here](https://www.docker.com/products/docker-desktop))
+- Docker Compose (included with Docker Desktop)
+
+### Quick Start with Docker
+
+#### Option 1: Using Docker Compose (Recommended)
+
+This is the easiest way to run the application with all configurations pre-set:
+
+```bash
+# Build and start the application
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the application
+docker-compose down
+```
+
+The application will be available at `http://localhost:8080`
+
+#### Option 2: Using Docker Commands
+
+```bash
+# Build the Docker image
+docker build -t spring-course-app .
+
+# Run the container
+docker run -d -p 8080:8080 -v $(pwd)/data:/app/data --name spring-course-app spring-course-app
+
+# View logs
+docker logs -f spring-course-app
+
+# Stop the container
+docker stop spring-course-app
+
+# Remove the container
+docker rm spring-course-app
+```
+
+### Docker Configuration Details
+
+#### Dockerfile
+The application uses a multi-stage build for optimal image size:
+- **Stage 1 (Build):** Uses Maven to compile and package the application
+- **Stage 2 (Runtime):** Uses a lightweight JRE image to run the application
+
+#### Docker Compose
+The `docker-compose.yml` includes:
+- **Port Mapping:** Maps container port 8080 to host port 8080
+- **Volume Mounting:** Persists H2 database data in `./data` directory
+- **Environment Variables:** Configures database connection and Spring profile
+- **Auto-restart:** Container automatically restarts unless manually stopped
+
+### Database Persistence
+
+The H2 database data is persisted in the `./data` directory on your host machine. This ensures:
+- Data survives container restarts
+- Easy backup and migration
+- Data is not lost when containers are removed
+
+### Docker Commands Reference
+
+```bash
+# View running containers
+docker ps
+
+# View all containers (including stopped)
+docker ps -a
+
+# View container logs
+docker-compose logs -f web
+
+# Restart the application
+docker-compose restart
+
+# Rebuild and restart (after code changes)
+docker-compose up -d --build
+
+# Stop and remove containers, networks
+docker-compose down
+
+# Stop and remove everything including volumes
+docker-compose down -v
+
+# Access container shell
+docker exec -it spring-course-app sh
+```
+
+### Troubleshooting Docker
+
+1. **Port already in use:**
+   ```bash
+   # Change the port in docker-compose.yml
+   ports:
+     - "8081:8080"  # Use 8081 instead of 8080
+   ```
+
+2. **Container won't start:**
+   ```bash
+   # Check logs for errors
+   docker-compose logs web
+   ```
+
+3. **Database issues:**
+   ```bash
+   # Remove the data volume and restart
+   docker-compose down -v
+   docker-compose up -d
+   ```
+
+4. **Image build fails:**
+   ```bash
+   # Clean build cache and rebuild
+   docker-compose build --no-cache
+   docker-compose up -d
+   ```
+
+### Production Deployment
+
+For production environments, consider:
+- Using environment variables for sensitive configuration
+- Setting up proper logging and monitoring
+- Configuring a production-grade database (PostgreSQL, MySQL)
+- Implementing proper backup strategies
+- Using Docker secrets for sensitive data
+- Setting up reverse proxy (Nginx) for HTTPS
+
+## �📖 Usage
 
 ### Default User Accounts
 
