@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    container_name: spring-course-app
+    ports:
+      - "8080:8080"
+    volumes:
+      # Persist H2 database data
+      - ./data:/app/data
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/app/data/coursedb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=password
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
