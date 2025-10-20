@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: course-management-hpa
-  namespace: assignment-12
+  namespace: assignment-5
   labels:
     app: course-management
 spec:

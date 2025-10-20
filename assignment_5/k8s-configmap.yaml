@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: course-management-config
-  namespace: assignment-12
+  namespace: assignment-5
   labels:
     app: course-management
 data:

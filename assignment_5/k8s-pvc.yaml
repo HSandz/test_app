@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: course-management-data
-  namespace: assignment-12
+  namespace: assignment-5
   labels:
     app: course-management
 spec:

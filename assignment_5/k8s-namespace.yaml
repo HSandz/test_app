@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: assignment-12
+  name: assignment-5
   labels:
-    name: assignment-12
+    name: assignment-5
     app: course-management

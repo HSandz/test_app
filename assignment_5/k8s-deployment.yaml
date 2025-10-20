@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: course-management-app
-  namespace: assignment-12
+  namespace: assignment-5
   labels:
     app: course-management
     version: v1
