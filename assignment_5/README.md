@@ -39,6 +39,9 @@ A Spring Boot web application for managing online courses with user authenticati
   - JPA/Hibernate for data management
 
 ## Visualize
+## Deploying with Docker and K8s
+<img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/09b36deb-79a2-46b9-9784-f3f5f9aadffb" />
+
 ### Home Page
 <img width="1845" height="860" alt="image" src="https://github.com/user-attachments/assets/f7f9ecee-4839-4dab-9f5e-75b937296d8a" />
 
