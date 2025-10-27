@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.customizations.health.apps_Deployment: |
+    hs = {}
+    if obj.spec.selector == null then
+      hs.statusCode = "Degraded"
+      hs.message = "Deployment has no selector"
+      return hs
+    end
+    if obj.status.observedGeneration < obj.metadata.generation then
+      hs.statusCode = "Progressing"
+      hs.message = "Waiting for rollout to finish: observed generation " .. obj.status.observedGeneration .. " less than desired generation " .. obj.metadata.generation
+      return hs
+    end
+    if obj.status.replicas > obj.status.updatedReplicas then
+      hs.statusCode = "Progressing"
+      hs.message = "Waiting for rollout to finish: " .. obj.status.replicas .. " total, " .. obj.status.updatedReplicas .. " updated replicas"
+      return hs
+    end
+    if obj.status.replicas > obj.status.availableReplicas then
+      hs.statusCode = "Progressing"
+      hs.message = "Waiting for rollout to finish: " .. obj.status.replicas .. " total, " .. obj.status.availableReplicas .. " available replicas"
+      return hs
+    end
+    if obj.status.updatedReplicas > obj.status.readyReplicas then
+      hs.statusCode = "Progressing"
+      hs.message = "Waiting for rollout to finish: " .. obj.status.updatedReplicas .. " updated, " .. obj.status.readyReplicas .. " ready replicas"
+      return hs
+    end
+    hs.statusCode = "Healthy"
+    return hs
