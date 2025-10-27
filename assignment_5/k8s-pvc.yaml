@@ -12,6 +12,3 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: docker-desktop
-  selector:
-    matchLabels:
-      app: course-management
