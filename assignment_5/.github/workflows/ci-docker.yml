@@ -33,14 +33,9 @@ jobs:
       uses: docker/setup-buildx-action@v3
     
     - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: assignment_5
-        push: false
-        tags: assignment_5:latest
-        file: assignment_5/Dockerfile
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+      run: |
+        cd assignment_5
+        docker build . --file Dockerfile --tag assignment_5:latest
     
     - name: Upload JAR artifact
       if: success()
