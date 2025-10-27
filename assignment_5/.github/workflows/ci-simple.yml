@@ -23,11 +23,12 @@ jobs:
     
     - name: Build project
       run: mvn clean package
+      working-directory: ./assignment_5
     
     - name: Upload build artifact
       if: success()
       uses: actions/upload-artifact@v3
       with:
         name: jar-file
-        path: target/*.jar
+        path: assignment_5/target/*.jar
         retention-days: 7

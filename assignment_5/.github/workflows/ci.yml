@@ -26,26 +26,29 @@ jobs:
     
     - name: Build with Maven
       run: mvn clean package -DskipTests
+      working-directory: ./assignment_5
     
     - name: Run tests
       run: mvn test
+      working-directory: ./assignment_5
     
     - name: Generate test report
       if: always()
       run: mvn surefire-report:report
+      working-directory: ./assignment_5
     
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: test-results
-        path: target/surefire-reports/
+        path: assignment_5/target/surefire-reports/
     
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
         name: jar-file
-        path: target/*.jar
+        path: assignment_5/target/*.jar
 
   code-quality:
     runs-on: ubuntu-latest
@@ -62,9 +65,11 @@ jobs:
     
     - name: Run checkstyle (code style check)
       run: mvn checkstyle:check || true
+      working-directory: ./assignment_5
     
     - name: Run SpotBugs (bug detection)
       run: mvn spotbugs:check || true
+      working-directory: ./assignment_5
 
   docker-build:
     needs: build
@@ -79,9 +84,10 @@ jobs:
     - name: Build Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./assignment_5
         push: false
         tags: assignment_5:latest
+        file: ./assignment_5/Dockerfile
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -100,3 +106,4 @@ jobs:
     
     - name: Dependency check for vulnerabilities
       run: mvn org.owasp:dependency-check-maven:check || true
+      working-directory: ./assignment_5

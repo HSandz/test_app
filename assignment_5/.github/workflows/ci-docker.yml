@@ -23,9 +23,11 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+        working-directory: ./assignment_5
     
     - name: Build project
       run: mvn clean package
+      working-directory: ./assignment_5
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -33,10 +35,10 @@ jobs:
     - name: Build Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./assignment_5
         push: false
         tags: assignment_5:latest
-        file: ./Dockerfile
+        file: ./assignment_5/Dockerfile
         cache-from: type=gha
         cache-to: type=gha,mode=max
     
@@ -50,12 +52,12 @@ jobs:
     # - name: Push Docker image
     #   uses: docker/build-push-action@v5
     #   with:
-    #     context: .
+    #     context: ./assignment_5
     #     push: true
     #     tags: |
     #       ${{ secrets.DOCKER_USERNAME }}/assignment_5:latest
     #       ${{ secrets.DOCKER_USERNAME }}/assignment_5:${{ github.sha }}
-    #     file: ./Dockerfile
+    #     file: ./assignment_5/Dockerfile
     #     cache-from: type=gha
     #     cache-to: type=gha,mode=max
     
@@ -64,5 +66,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: jar-file
-        path: target/*.jar
+        path: assignment_5/target/*.jar
         retention-days: 7
