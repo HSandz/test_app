@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
       - name: app
-        image: assignment_12-web:latest
-        imagePullPolicy: IfNotPresent
+        image: ghcr.io/hsandz/ptuddn/assignment_5:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http
