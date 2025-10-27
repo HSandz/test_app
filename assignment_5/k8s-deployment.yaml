@@ -66,18 +66,18 @@ spec:
           failureThreshold: 30  # 30 * 5 = 150 seconds total startup time
         
         # Liveness probe - checks if container is alive
-        livenessProbe:
-          tcpSocket:
-            port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 10
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 8080
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
         
         # Readiness probe - checks if container is ready to accept traffic
-        readinessProbe:
-          tcpSocket:
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 8080
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 10
       
       # Volumes
       volumes:
