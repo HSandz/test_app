@@ -1,4 +1,4 @@
-# Course Management System ON DOCKER
+# Course Management System ON DOCKER + K8s with CI/CD
 
 A Spring Boot web application for managing online courses with user authentication and role-based access control.
 
@@ -39,6 +39,15 @@ A Spring Boot web application for managing online courses with user authenticati
   - JPA/Hibernate for data management
 
 ## Visualize
+## CI with GitHub Action
+<img width="1819" height="951" alt="image" src="https://github.com/user-attachments/assets/6078e432-9fb6-48ca-a1a3-871bfa7d7801" />
+
+## GitHub Container Registry Push
+<img width="1814" height="955" alt="image" src="https://github.com/user-attachments/assets/f3b6b8e3-929f-49d5-b9a2-24981df25877" />
+
+## CD with AgroCD
+<img width="1802" height="1010" alt="image" src="https://github.com/user-attachments/assets/00cc570c-889e-434c-a081-800d5387e1b3" />
+
 ## Deploying with Docker and K8s
 <img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/09b36deb-79a2-46b9-9784-f3f5f9aadffb" />
 
