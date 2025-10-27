@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
       - name: app
-        image: ghcr.io/hsandz/ptuddn/assignment_5:latest
-        imagePullPolicy: Always  # Pull latest image from GHCR
+        image: assignment_12-web:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
           name: http
@@ -56,12 +56,21 @@ spec:
             memory: "256Mi"
             cpu: "200m"
         
+        # Startup probe - allows container extra time to start
+        startupProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 30  # 30 * 5 = 150 seconds total startup time
+        
         # Liveness probe - checks if container is alive
         livenessProbe:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 3
@@ -71,7 +80,7 @@ spec:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 10
+          initialDelaySeconds: 90
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 3
