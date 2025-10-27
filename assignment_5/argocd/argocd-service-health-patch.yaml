@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.customizations.health.core_Service: |
+    hs = {}
+    if obj.spec.type == "LoadBalancer" then
+      if obj.status.loadBalancer == null or obj.status.loadBalancer.ingress == null then
+        hs.statusCode = "Progressing"
+        hs.message = "Waiting for LoadBalancer external IP"
+        return hs
+      end
+    end
+    hs.statusCode = "Healthy"
+    return hs
