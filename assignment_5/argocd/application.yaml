@@ -7,7 +7,7 @@ spec:
   project: default
   
   source:
-    repoURL: https://github.com/HSandz/PTUDDN.git
+    repoURL: https://github.com/HSandz/test_app.git
     targetRevision: master
     path: assignment_5
   

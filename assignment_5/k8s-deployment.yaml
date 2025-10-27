@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: ghcr.io/hsandz/ptuddn/assignment_5:latest
+        image: ghcr.io/hsandz/test_app/assignment_5:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
