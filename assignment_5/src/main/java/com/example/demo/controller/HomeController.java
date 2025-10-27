@@ -16,6 +16,8 @@ public class HomeController {
             model.addAttribute("username", auth.getName());
             model.addAttribute("authorities", auth.getAuthorities());
         }
+        // CI/CD Test - Auto-deployed by GitHub Actions + ArgoCD
+        model.addAttribute("cicdDeployed", true);
         return "home";
     }
 

@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+  ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_AUTH_TOKEN }}
+
 jobs:
 
   build:
@@ -49,3 +53,11 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+    
+    - name: Trigger ArgoCD sync (optional)
+      if: success() && github.event_name == 'push'
+      run: |
+        if [ -n "$ARGOCD_SERVER" ] && [ -n "$ARGOCD_AUTH_TOKEN" ]; then
+          echo "ArgoCD sync would be triggered here"
+          echo "Configure ARGOCD_SERVER and ARGOCD_AUTH_TOKEN secrets to enable automatic sync"
+        fi

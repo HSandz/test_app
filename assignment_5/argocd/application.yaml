@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: assignment-5-app
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/HSandz/PTUDDN.git
+    targetRevision: master
+    path: assignment_5
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: assignment-5
+  
+  syncPolicy:
+    automated:
+      prune: true      # Delete resources that are no longer tracked
+      selfHeal: true   # Automatically resync if cluster state deviates
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
