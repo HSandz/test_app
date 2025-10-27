@@ -260,7 +260,28 @@ For production environments, consider:
 - Using Docker secrets for sensitive data
 - Setting up reverse proxy (Nginx) for HTTPS
 
-## �📖 Usage
+## 🔄 CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration and **ArgoCD** for continuous deployment:
+
+### GitHub Actions (CI)
+- **Trigger:** Push to `master` branch
+- **Build:** Maven 3.9 + OpenJDK 21
+- **Output:** Docker image pushed to GitHub Container Registry (GHCR)
+- **Image:** `ghcr.io/hsandz/test_app/assignment_5:latest`
+
+### ArgoCD (GitOps Deployment)
+- **Repository:** `https://github.com/HSandz/test_app.git`
+- **Target Branch:** `master`
+- **Sync Policy:** Automated with auto-prune and self-healing
+- **Deployment:** Kubernetes (assignment-5 namespace)
+
+### Workflow
+```
+Code Push → GitHub Actions Build → GHCR Push → ArgoCD Sync → K8s Deploy
+```
+
+## 📖 Usage
 
 ### Default User Accounts
 
