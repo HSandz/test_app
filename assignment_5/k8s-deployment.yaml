@@ -56,14 +56,14 @@ spec:
             memory: "256Mi"
             cpu: "200m"
         
-        # Startup probe - allows container extra time to start
-        startupProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          failureThreshold: 30  # 30 * 5 = 150 seconds total startup time
+        # Startup probe disabled - app takes too long to start and H2 has shutdown issues
+        # startupProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8080
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 5
+        #   failureThreshold: 30  # 30 * 5 = 150 seconds total startup time
         
         # Liveness probe - checks if container is alive
         # livenessProbe:
