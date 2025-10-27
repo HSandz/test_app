@@ -25,17 +25,20 @@ jobs:
         cache: maven
     
     - name: Build with Maven
-      run: mvn clean package -DskipTests
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn clean package -DskipTests
     
     - name: Run tests
-      run: mvn test
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn test
     
     - name: Generate test report
       if: always()
-      run: mvn surefire-report:report
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn surefire-report:report
     
     - name: Upload test results
       if: always()
@@ -64,12 +67,14 @@ jobs:
         cache: maven
     
     - name: Run checkstyle (code style check)
-      run: mvn checkstyle:check || true
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn checkstyle:check || true
     
     - name: Run SpotBugs (bug detection)
-      run: mvn spotbugs:check || true
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn spotbugs:check || true
 
   docker-build:
     needs: build
@@ -84,10 +89,10 @@ jobs:
     - name: Build Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./assignment_5
+        context: assignment_5
         push: false
         tags: assignment_5:latest
-        file: ./assignment_5/Dockerfile
+        file: assignment_5/Dockerfile
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -105,5 +110,6 @@ jobs:
         cache: maven
     
     - name: Dependency check for vulnerabilities
-      run: mvn org.owasp:dependency-check-maven:check || true
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn org.owasp:dependency-check-maven:check || true

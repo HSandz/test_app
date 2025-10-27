@@ -22,8 +22,9 @@ jobs:
         cache: maven
     
     - name: Build project
-      run: mvn clean package
-      working-directory: ./assignment_5
+      run: |
+        cd assignment_5
+        mvn clean package
     
     - name: Upload build artifact
       if: success()
