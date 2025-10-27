@@ -34,8 +34,7 @@ jobs:
     
     - name: Build Docker image
       run: |
-        cd assignment_5
-        docker build . --file Dockerfile --tag assignment_5:latest
+        docker build assignment_5 --file assignment_5/Dockerfile --tag assignment_5:latest
     
     - name: Upload JAR artifact
       if: success()
