@@ -8,7 +8,6 @@ resources:
   - k8s-configmap.yaml
   - k8s-deployment.yaml
   - k8s-service.yaml
-  - k8s-hpa.yaml
 
 commonLabels:
   app: course-management

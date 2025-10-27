@@ -15,14 +15,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: assignment-5
   
-  # Ignore HPA status since it depends on metrics-server which isn't installed
-  ignoreDifferences:
-  - group: autoscaling
-    kind: HorizontalPodAutoscaler
-    jsonPointers:
-    - /status/currentReplicas
-    - /status/desiredReplicas
-  
   syncPolicy:
     automated:
       prune: true      # Delete resources that are no longer tracked
