@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 5m
+      # SMTP configuration for email alerts
+      smtp_smarthost: 'smtp.gmail.com:587'
+      smtp_from: 'lehoangsand55@gmail.com'
+      smtp_auth_username: 'lehoangsand55@gmail.com'
+      smtp_auth_password: 'my pass word'
+      smtp_require_tls: true
+
+    # The root route with all parameters, which are inherited by child routes
+    route:
+      receiver: 'default-receiver'
+      group_by: ['alertname', 'cluster', 'service']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 12h
+      routes:
+        # Critical alerts go to multiple channels
+        - match:
+            severity: critical
+          receiver: 'critical-alerts'
+          continue: true
+
+        # Warning alerts
+        - match:
+            severity: warning
+          receiver: 'warning-alerts'
+
+    receivers:
+      # Default receiver
+      - name: 'default-receiver'
+        webhook_configs:
+          - url: 'http://localhost:5001/webhook'
+            send_resolved: true
+
+      # Critical alerts - send to email, webhook, and Slack
+      - name: 'critical-alerts'
+        email_configs:
+          - to: 'lehoangsand55@gmail.com'
+            headers:
+              Subject: '[CRITICAL] Alert: {{ .GroupLabels.alertname }}'
+            html: |
+              <h2>Critical Alert Fired</h2>
+              <p><strong>Alert:</strong> {{ .GroupLabels.alertname }}</p>
+              <p><strong>Summary:</strong> {{ .CommonAnnotations.summary }}</p>
+              <p><strong>Description:</strong> {{ .CommonAnnotations.description }}</p>
+              <p><strong>Severity:</strong> {{ .CommonLabels.severity }}</p>
+              <p><strong>Fired at:</strong> {{ .StartsAt }}</p>
+
+        webhook_configs:
+          - url: 'http://your-webhook-endpoint.com/alert'
+            send_resolved: true
+            http_config:
+              basic_auth:
+                username: 'webhook-user'
+                password: 'webhook-password'
+
+        # Uncomment and configure for Slack
+        # slack_configs:
+        #   - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        #     channel: '#alerts'
+        #     title: 'Critical Alert: {{ .CommonLabels.alertname }}'
+        #     text: '{{ .CommonAnnotations.description }}'
+
+      # Warning alerts - send to email only
+      - name: 'warning-alerts'
+        email_configs:
+          - to: 'lehoangsand55@gmail.com'
+            headers:
+              Subject: '[WARNING] Alert: {{ .GroupLabels.alertname }}'
+            html: |
+              <h2>Warning Alert</h2>
+              <p><strong>Alert:</strong> {{ .GroupLabels.alertname }}</p>
+              <p><strong>Summary:</strong> {{ .CommonAnnotations.summary }}</p>
+              <p><strong>Description:</strong> {{ .CommonAnnotations.description }}</p>
+
+    # Inhibition rules to suppress alerts
+    inhibit_rules:
+      - source_match:
+          severity: 'critical'
+        target_match:
+          severity: 'warning'
+        equal: ['alertname', 'instance']

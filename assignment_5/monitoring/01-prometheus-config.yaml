@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+      external_labels:
+        cluster: 'docker-desktop'
+        replica: 'prometheus-1'
+
+    # Alertmanager configuration
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+                - alertmanager:9093
+
+    # Load rules once and periodically evaluate them
+    rule_files:
+      - '/etc/prometheus/rules/*.yml'
+
+    scrape_configs:
+      # Prometheus itself
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+
+      # Kubernetes API server
+      - job_name: 'kubernetes-apiservers'
+        kubernetes_sd_configs:
+          - role: endpoints
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: default;kubernetes;https
+
+      # Kubernetes nodes
+      - job_name: 'kubernetes-nodes'
+        kubernetes_sd_configs:
+          - role: node
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+
+      # Kubernetes pods
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: kubernetes_pod_name
+
+      # Course Management App (our application in assignment-5)
+      - job_name: 'course-management-app'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - assignment-5
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            action: keep
+            regex: course-management-app
+          - source_labels: [__meta_kubernetes_pod_ip]
+            action: replace
+            regex: (.+)
+            replacement: $1:8080
+            target_label: __address__
+
+  alert-rules.yml: |
+    groups:
+      - name: app_alerts
+        interval: 30s
+        rules:
+          # Alert when pod is down
+          - alert: PodDown
+            expr: up{job="course-management-app"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Pod {{ $labels.kubernetes_pod_name }} is down"
+              description: "The course management application pod has been down for more than 1 minute."
+
+          # Alert on high memory usage
+          - alert: HighMemoryUsage
+            expr: (container_memory_usage_bytes{pod=~"course-management-app.*"} / container_spec_memory_limit_bytes{pod=~"course-management-app.*"}) > 0.8
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High memory usage on {{ $labels.pod }}"
+              description: "Memory usage is above 80% for more than 2 minutes."
+
+          # Alert on high CPU usage
+          - alert: HighCPUUsage
+            expr: (rate(container_cpu_usage_seconds_total{pod=~"course-management-app.*"}[5m]) * 100) > 80
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU usage on {{ $labels.pod }}"
+              description: "CPU usage is above 80% for more than 2 minutes."
+
+          # Alert when pod restarts too frequently
+          - alert: PodFrequentlyRestarting
+            expr: rate(kube_pod_container_status_restarts_total{pod=~"course-management-app.*"}[15m]) > 0
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod {{ $labels.pod }} is restarting frequently"
+              description: "Pod has restarted {{ $value }} times in the last 15 minutes."
+
+      - name: kubernetes_alerts
+        interval: 30s
+        rules:
+          # Alert when node is not ready
+          - alert: NodeNotReady
+            expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Node {{ $labels.node }} is not ready"
+              description: "Kubernetes node has been not ready for more than 5 minutes."
+
+          # Alert on low disk space
+          - alert: LowDiskSpace
+            expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) < 0.1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Low disk space on {{ $labels.instance }}"
+              description: "Disk space is below 10% on {{ $labels.device }}."
