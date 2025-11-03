@@ -1,6 +1,7 @@
 # Course Management System ON DOCKER + K8s with CI/CD
 
 A Spring Boot web application for managing online courses with user authentication and role-based access control.
+Using Prometheus and Grafana
 
 ## 📋 Table of Contents
 - [Features](#features)
@@ -39,6 +40,12 @@ A Spring Boot web application for managing online courses with user authenticati
   - JPA/Hibernate for data management
 
 ## Visualize
+## Prometheus
+<img width="1860" height="1014" alt="image" src="https://github.com/user-attachments/assets/02b601ea-b9c2-487d-9495-09d385f0c514" />
+
+## Alert Manager
+<img width="1829" height="1011" alt="image" src="https://github.com/user-attachments/assets/76aa516b-d3a6-4278-9ad7-1e3d5e26b202" />
+
 ## CI with GitHub Action
 <img width="1819" height="951" alt="image" src="https://github.com/user-attachments/assets/6078e432-9fb6-48ca-a1a3-871bfa7d7801" />
 
