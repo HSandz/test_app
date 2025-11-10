@@ -1,0 +1,7 @@
+systemLog:
+  destination: file
+  path: C:\Users\lehoa\OneDrive\Documents\College\N3-K1\PTUDDN\PTUDDN\assignment_6\mongodb-cluster\mongos\mongos.log
+net:
+  port: 27000
+sharding:
+  configDB: configRS/localhost:27040,localhost:27041,localhost:27042

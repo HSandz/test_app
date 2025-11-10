@@ -1,0 +1,11 @@
+storage:
+  dbPath: C:\Users\lehoa\OneDrive\Documents\College\N3-K1\PTUDDN\PTUDDN\assignment_6\mongodb-cluster\configrs\27042\data
+systemLog:
+  destination: file
+  path: C:\Users\lehoa\OneDrive\Documents\College\N3-K1\PTUDDN\PTUDDN\assignment_6\mongodb-cluster\configrs\27042\log\mongod.log
+net:
+  port: 27042
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: configRS
