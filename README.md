@@ -11,5 +11,7 @@ PTUDDN/
 ├── assignment_4/          # Bài tập 4: Spring Boot SSO
 ├── assignment_5/          # Bài tập 5: Docker + K8s Run
 |                          #            CI/CD: GitHub Action + AgroCD
+                           #            Prometheus + Grafana
+├── assignment_6/          # Bài tập 6: MongoDB Replication + Sharding
 └── README.md              # File README tổng quan
 ```
