@@ -12,6 +12,13 @@ The cluster uses YAML config files and PowerShell scripts so you don’t juggle 
 
 ---
 
+## Visualize
+### Replication and Sharding
+<img width="701" height="865" alt="image" src="https://github.com/user-attachments/assets/0f673fe2-ae71-4b42-bb47-847f1295c952" />
+
+### MongoDB Data (Compass)
+<img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/ba657fd1-fc68-4cf3-bae3-ed6e8f86b3e9" />
+
 ## Prerequisites
 
 * **Windows 10/11**
