@@ -13,5 +13,6 @@ PTUDDN/
 |                          #            CI/CD: GitHub Action + AgroCD
 |                          #            Prometheus + Grafana
 ├── assignment_6/          # Bài tập 6: MongoDB Replication + Sharding
+├── assignment_7/          # Bài tập 7: Message broker sử dụng Kafka
 └── README.md              # File README tổng quan
 ```
