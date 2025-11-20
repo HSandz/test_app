@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assignment-8-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assignment-8
+  template:
+    metadata:
+      labels:
+        app: assignment-8
+    spec:
+      containers:
+      - name: assignment-8
+        image: assignment-8:latest # Thay thế bằng image của bạn (ví dụ: docker.io/username/assignment-8:latest)
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "200m" # Yêu cầu tối thiểu 0.2 CPU
+            memory: "256Mi"
+          limits:
+            cpu: "500m" # Giới hạn tối đa 0.5 CPU
+            memory: "512Mi"
