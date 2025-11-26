@@ -15,5 +15,7 @@ PTUDDN/
 ├── assignment_6/          # Bài tập 6: MongoDB Replication + Sharding
 ├── assignment_7/          # Bài tập 7: Message broker sử dụng Kafka
 ├── assignment_8/          # Bài tập 8: Triển khai ứng dụng trên K8s Cloud
+├── assignment_9/          # Bài tập 9: Tạo ứng dụng ChatBot sử dụng LLM
+├── assignment_10/         # Bài tập 10: DataLake Storage
 └── README.md              # File README tổng quan
 ```
